@@ -1,4 +1,4 @@
-package kratosgomicro
+package kratos
 
 import (
 	"context"

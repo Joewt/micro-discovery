@@ -1,4 +1,4 @@
-package kratosgomicro
+package kratos
 
 import (
 	"context"
@@ -40,7 +40,7 @@ type Discovery struct {
 	lease  clientv3.Lease
 }
 
-func New(client *clientv3.Client, opts ...Option) (r *Discovery) {
+func NewGoMicro(client *clientv3.Client, opts ...Option) (r *Discovery) {
 	options := &options{
 		prefix:   prefix,
 		timeout:  time.Second * 15,
