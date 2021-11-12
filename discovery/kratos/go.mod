@@ -1,4 +1,4 @@
-module github.com/yinrenxin/micro-discovery/kratos
+module github.com/yinrenxin/micro-discovery/discovery/kratos
 
 go 1.16
 
