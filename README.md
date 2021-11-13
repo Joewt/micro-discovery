@@ -6,7 +6,7 @@
 
 1. 安装
 ```
-go get github.com/yinrenxin/micro-discovery/kratos
+go get github.com/yinrenxin/micro-discovery
 ```
 2. example
 ```

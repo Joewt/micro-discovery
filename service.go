@@ -57,7 +57,7 @@ func NewGoMicro(client *clientv3.Client, opts ...Option) (r *Discovery) {
 }
 
 func (d *Discovery) GetService(ctx context.Context, name string) ([]*registry.ServiceInstance, error) {
-	key := path.Join(d.opts.prefix, strings.Replace(name, "/", "-", -1))
+	key := path.Join(d.opts.prefix, strings.Replace(name, "/", "-", -1))+"/"
 	resp, err := d.kv.Get(ctx, key, clientv3.WithPrefix(), clientv3.WithSerializable())
 	if err != nil {
 		return nil, err
@@ -83,7 +83,7 @@ func (d *Discovery) GetService(ctx context.Context, name string) ([]*registry.Se
 }
 
 func (d *Discovery) Watch(ctx context.Context, name string) (registry.Watcher, error) {
-	key := path.Join(d.opts.prefix, strings.Replace(name, "/", "-", -1))
+	key := path.Join(d.opts.prefix, strings.Replace(name, "/", "-", -1))+"/"
 	return newWatcher(ctx, key, d.client), nil
 }
 
