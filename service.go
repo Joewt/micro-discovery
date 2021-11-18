@@ -67,7 +67,7 @@ func (d *Discovery) GetService(ctx context.Context, name string) ([]*registry.Se
 		if sn, err := decode(kv.Value); err == nil {
 			var endpoints []string
 			for _, v := range sn.Nodes {
-				endpoints = append(endpoints, v.Address)
+				endpoints = append(endpoints, "grpc://"+v.Address)
 			}
 
 			si := &registry.ServiceInstance{

@@ -66,7 +66,7 @@ func (w *watcher) getInstance() ([]*registry.ServiceInstance, error) {
 		if sn, err := decode(kv.Value); err == nil {
 			var endpoints []string
 			for _, v := range sn.Nodes {
-				endpoints = append(endpoints, v.Address)
+				endpoints = append(endpoints, "grpc://"+v.Address)
 			}
 
 			si := &registry.ServiceInstance{
