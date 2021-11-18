@@ -57,17 +57,26 @@ func (w *watcher) Stop() error {
 }
 
 func (w *watcher) getInstance() ([]*registry.ServiceInstance, error) {
-	resp, err := w.kv.Get(w.ctx, w.key, clientv3.WithPrefix())
+	resp, err := w.kv.Get(w.ctx, w.key, clientv3.WithPrefix(), clientv3.WithSerializable())
 	if err != nil {
 		return nil, err
 	}
 	var items []*registry.ServiceInstance
 	for _, kv := range resp.Kvs {
-		si, err := unmarshal(kv.Value)
-		if err != nil {
-			return nil, err
+		if sn, err := decode(kv.Value); err == nil {
+			var endpoints []string
+			for _, v := range sn.Nodes {
+				endpoints = append(endpoints, v.Address)
+			}
+
+			si := &registry.ServiceInstance{
+				Name:      sn.Name,
+				Version:   sn.Version,
+				Metadata:  sn.Metadata,
+				Endpoints: endpoints,
+			}
+			items = append(items, si)
 		}
-		items = append(items, si)
 	}
 	return items, nil
 }
