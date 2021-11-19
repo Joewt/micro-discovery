@@ -17,10 +17,21 @@ go get github.com/yinrenxin/micro-discovery
 	}
 	defer client.Close()
 
-	service := kratos.NewGoMicro(client)
+	service := discovery.NewGoMicro(client)
 
+	// 获取服务列表
 	r, err := service.GetService(ctx, "serviceName")
 	if err != nil {
 		panic(err)
 	}
+
+	// 初始化kratos的grpc client，传入go-micro微服务的服务名
+	conn, err := grpc.DialInsecure(
+		ctx,
+		grpc.WithEndpoint("discovery:///servicename"),
+		grpc.WithDiscovery(service),
+	)
+
+	// 调用方法
+
 ```
